@@ -11,6 +11,7 @@
 #     console.log "Saved! #{editor.getPath()}"
 
 path = require 'path'
+default_args = ["-S"]
 
 MakePandocFile = (extention, args) ->
   [pandoc_args,cwd] =  MakePandocArgs(extention,args)
@@ -22,8 +23,8 @@ MakePandocArgs = (extention, args) ->
   cwd = path.dirname(from_path)
   to_path = from_path.substr(0, from_path.lastIndexOf('.') + 1) + extention;
   fpath = [from_path]
-  console.log("to path = " + path.dirname(to_path))
-  pandoc_args = fpath.concat(args, ["-o"],[to_path])
+  #console.log("to path = " + path.dirname(to_path))
+  pandoc_args = fpath.concat(args, default_args, ["-o"],[to_path])
   [pandoc_args, cwd]
 
 spawnchild = (cmd,args,cwd) ->
@@ -34,7 +35,7 @@ spawnchild = (cmd,args,cwd) ->
   pandoc.on 'close', (c) -> console.log('child process exited with code ' + c);
 
 atom.commands.add 'atom-text-editor', 'Pandoc:pandoc2Word': ->
-  args = ['-s','-S']
+  args = ['-s']
   MakePandocFile('docx',args)
 
 atom.commands.add 'atom-text-editor', 'Pandoc:pandoc2Tex': ->
@@ -42,7 +43,7 @@ atom.commands.add 'atom-text-editor', 'Pandoc:pandoc2Tex': ->
   MakePandocFile('tex',args)
 
 atom.commands.add 'atom-text-editor', 'Pandoc:pandoc2Pdf': ->
-  args = ['--latex-engine=xelatex', '-s','-S']
+  args = ['--latex-engine=xelatex', '-s']
   MakePandocFile('pdf',args)
 
 atom.commands.add 'atom-text-editor', 'Pandoc:pandoc2HTML': ->
