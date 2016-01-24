@@ -51,5 +51,5 @@ atom.commands.add 'atom-text-editor', 'Pandoc:pandoc2HTML': ->
   MakePandocFile('html',args)
 
 atom.commands.add 'atom-text-editor', 'Pandoc:pandoc2RevealJS': ->
-  args = ['-t', 'revealjs','-V','theme=solarized','transistion=fade','-s']
+  args = ['--to=revealjs','--self-contained','-V','theme=solarized','-V','transistion=fade','-s']
   MakePandocFile('html',args)
