@@ -37,6 +37,15 @@ spawnchild = (cmd,args,cwd) ->
 atom.commands.add 'atom-text-editor', 'Pandoc:pandoc2Word': ->
   args = ['-s']
   MakePandocFile('docx',args)
+  
+#
+# You can use the YAML block to give the absolute (!) path to the bib file: http://pandoc.org/README.html#citations
+# For customization of pandoc-crossref: https://github.com/lierdakil/pandoc-crossref#Customization
+#
+
+atom.commands.add 'atom-text-editor', 'Pandoc:pandoc2Word with References': ->
+  args = ['-s','--filter=pandoc-crossref','--filter=pandoc-citeproc','-S']
+  MakePandocFile('docx',args)
 
 atom.commands.add 'atom-text-editor', 'Pandoc:pandoc2Tex': ->
   args = ['--latex-engine=xelatex', '-s']
